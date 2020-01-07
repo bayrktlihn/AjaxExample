@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("button").click(function () {
+                $.ajax({
+                    url: "http://localhost:44386/Api/Person/FindAll", success: function (result) {
+                        var html = [];
+                        $.getJSON("http://localhost:44386/Api/Person/FindAll", function (data) {
+                            $.each(data, function(key, value) {
+                                html.push(value.FirstName);
+                                html.push(value.LastName);
+                                html.push("</br>");
+                            });
+
+                            $("#myDiv").empty().append(html);
+
+                        })
+                    },
+                    type: "GET",
+                    beforeSend: function(){
+                        $(".myExm").show();
+                    },
+                    complete: function(){
+                        $(".myExm").hide();
+                    }
+
+                });
+            });
+        });
+    </script>
+
+    <style>
+        .myExm{
+         display:none;   
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="div1">
+        <img src="loading.gif" class="myExm">
+    </div>
+
+    <button>Get External Content</button>
+
+    <div id="myDiv">
+
+    </div>
+
+</body>
+
+</html>
